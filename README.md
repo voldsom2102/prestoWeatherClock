@@ -113,7 +113,19 @@ table.
 | `AMBIENT_LIGHT` | `True` | Mirror the screen colours on Presto's onboard RGB LEDs. |
 | `NIGHT_DIMMING_ENABLED` | `True` | Automatically dim the backlight overnight. |
 | `NIGHT_START_HOUR` / `NIGHT_END_HOUR` | `22` / `7` | Local-time (24h) window during which the screen is dimmed. |
-| `DAY_BRIGHTNESS` / `NIGHT_BRIGHTNESS` | `1.0` / `0.15` | Backlight levels (`0.0`-`1.0`) outside/inside the night window. |
+| `DAY_BRIGHTNESS` / `NIGHT_BRIGHTNESS` | `1.0` / `0.05` | Backlight levels (`0.0`-`1.0`) outside/inside the night window. |
+
+> **Note on `AMBIENT_LIGHT` vs. night dimming:** these are two independent
+> hardware features. `NIGHT_DIMMING_ENABLED` only changes the LCD panel's
+> backlight (via `presto.set_backlight()`); it never touches the onboard
+> RGB LEDs. When `AMBIENT_LIGHT` is `True`, those LEDs are driven entirely
+> by Presto's own firmware, which mirrors the colours already on screen -
+> so they can appear to dim or change on their own, independently of the
+> backlight brightness setting above. Also note that Presto's backlight PWM
+> curve is very non-linear: only `1.0` is true full brightness, and most
+> other values collapse onto a narrow, barely-distinguishable low range, so
+> `NIGHT_BRIGHTNESS` needs to be quite low (e.g. `0.05`) to look visibly
+> dimmer than daytime.
 
 ## How it works
 

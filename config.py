@@ -38,8 +38,17 @@ AMBIENT_LIGHT = True
 # --- Nightstand dimming ---
 # Automatically dim the backlight overnight so it isn't dazzling in a
 # dark bedroom, then brighten it again in the morning.
+#
+# Presto's backlight PWM curve is very non-linear (see ST7701::set_backlight
+# in the Presto firmware): only brightness == 1.0 reaches true full
+# brightness, and almost every other value below that collapses onto a
+# narrow, barely-distinguishable low range. In practice this means values
+# like 0.15 look nearly identical to full brightness on real hardware - the
+# screen will look like it "isn't dimming" even though the backlight value
+# did change. To get a visibly dim screen at night, use a low value close
+# to (but not exactly) 0.0 - 0.0 itself turns the backlight fully off.
 NIGHT_DIMMING_ENABLED = True
 NIGHT_START_HOUR = 22  # 10pm, local time, 24-hour clock
 NIGHT_END_HOUR = 7  # 7am
 DAY_BRIGHTNESS = 1.0  # 0.0 - 1.0
-NIGHT_BRIGHTNESS = 0.15  # 0.0 - 1.0
+NIGHT_BRIGHTNESS = 0.05  # 0.0 - 1.0 - keep this low; see note above
