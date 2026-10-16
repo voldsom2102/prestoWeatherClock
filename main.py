@@ -64,7 +64,10 @@ def show_message(text, pen=_WHITE):
 # ntptime.settime() does) has no timeout on MicroPython and can hang forever
 # if the router doesn't answer, so we skip DNS entirely.
 _NTP_SERVERS = ("162.159.200.1", "216.239.35.0")
-_NTP_DELTA = 3155673600  # seconds between the NTP epoch (1900) and the RP2040's (2000)
+# Seconds between the NTP epoch (1900) and the port's time epoch. Older
+# MicroPython builds count from 2000, newer ones from the Unix epoch (1970),
+# so detect which one this firmware uses.
+_NTP_DELTA = 3155673600 if time.gmtime(0)[0] == 2000 else 2208988800
 
 
 def sync_time_from_ntp(timeout_s=2):
