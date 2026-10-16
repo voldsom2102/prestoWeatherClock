@@ -42,7 +42,18 @@ def format_time(hour, minute, second, use_24_hour, show_seconds):
     return "{:02d}:{:02d}{}".format(display_hour, minute, suffix)
 
 
-def format_date(year, month, day, weekday):
+def format_date(year, month, day):
+    days_before_year = (
+        365 * (year - 1)
+        + (year - 1) // 4
+        - (year - 1) // 100
+        + (year - 1) // 400
+    )
+    days_before_month = sum(
+        (31, 29 if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0) else 28,
+         31, 30, 31, 30, 31, 31, 30, 31, 30, 31)[:month - 1]
+    )
+    weekday = (days_before_year + days_before_month + day - 1) % 7
     return "{}, {} {}".format(WEEKDAYS[weekday], MONTHS[month - 1], day)
 
 

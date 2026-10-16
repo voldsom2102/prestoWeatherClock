@@ -22,9 +22,9 @@ class FormatTimeTests(unittest.TestCase):
 
 
 class FormatDateTests(unittest.TestCase):
-    def test_format(self):
-        # Weekday 2 == Wednesday (Monday is 0, per time.struct_time/MicroPython).
-        self.assertEqual(format_date(2026, 9, 16, 2), "Wednesday, September 16")
+    def test_weekday_is_derived_from_calendar_date(self):
+        self.assertEqual(format_date(2026, 9, 16), "Wednesday, September 16")
+        self.assertEqual(format_date(2026, 10, 16), "Friday, October 16")
 
 
 class IsNightTests(unittest.TestCase):

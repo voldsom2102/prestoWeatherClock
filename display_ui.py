@@ -30,7 +30,7 @@ class ClockFace:
 
     def draw(self, now, weather, weather_error):
         d = self.display
-        year, month, day, hour, minute, second, weekday, _ = now
+        year, month, day, hour, minute, second, _, _ = now
 
         d.set_pen(self.bg)
         d.clear()
@@ -45,7 +45,7 @@ class ClockFace:
 
         y += MARGIN
         y = self._draw_centered_text(
-            format_date(year, month, day, weekday),
+            format_date(year, month, day),
             y,
             self.date_scale,
             self.dim,
