@@ -1,3 +1,7 @@
+If you like my work, consider buying me a coffee.
+
+<a href="https://ko-fi.com/ajmartin_dev"><img height="36" src="https://storage.ko-fi.com/cdn/kofi6.png?v=6" alt="Buy Me a Coffee at ko-fi.com" /></a>
+
 # Presto Weather Clock
 
 A nightstand digital clock and weather display for the
@@ -164,5 +168,3 @@ network access is required.
 ## License
 
 MIT - see [LICENSE](LICENSE).
-
-<a href="https://ko-fi.com/ajmartin_dev"><img height="36" src="https://storage.ko-fi.com/cdn/kofi6.png?v=6" alt="Buy Me a Coffee at ko-fi.com" /></a>
