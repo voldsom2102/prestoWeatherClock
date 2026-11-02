@@ -14,6 +14,7 @@ SAMPLE_RESPONSE = {
     },
     "wind": {"speed": 3.6},
     "name": "London",
+    "timezone": 3600,
     "sys": {"sunrise": 1_700_000_000, "sunset": 1_700_040_000},
 }
 
@@ -60,6 +61,25 @@ class FetchTests(unittest.TestCase):
         self.assertEqual(result["icon"], "03d")
         self.assertEqual(result["humidity"], 62)
         self.assertEqual(result["location_name"], "London")
+        self.assertEqual(result["timezone_offset_seconds"], 3600)
+
+    @patch("weather.requests")
+    def test_missing_timezone_offset_is_left_unset(self, mock_requests):
+        response_data = dict(SAMPLE_RESPONSE)
+        del response_data["timezone"]
+        mock_requests.get.return_value = _mock_response(response_data)
+
+        result = self.client.fetch()
+
+        self.assertIsNone(result["timezone_offset_seconds"])
+
+    @patch("weather.requests")
+    def test_non_integer_timezone_offset_raises_weather_error(self, mock_requests):
+        response_data = dict(SAMPLE_RESPONSE, timezone="UTC+1")
+        mock_requests.get.return_value = _mock_response(response_data)
+
+        with self.assertRaises(WeatherError):
+            self.client.fetch()
 
     @patch("weather.requests")
     def test_fetch_closes_the_response(self, mock_requests):

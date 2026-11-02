@@ -56,6 +56,16 @@ class LocalTimeTests(unittest.TestCase):
         epoch = 1_700_000_000
         self.assertEqual(local_time(epoch, 0, time), time.gmtime(epoch))
 
+    def test_location_offset_seconds_override_manual_offset(self):
+        epoch = 1_700_000_000
+        result = local_time(epoch, -5, time, 5_400)
+        self.assertEqual(result, time.gmtime(epoch + 5_400))
+
+    def test_manual_offset_is_used_when_location_offset_is_unavailable(self):
+        epoch = 1_700_000_000
+        result = local_time(epoch, -5, time)
+        self.assertEqual(result, time.gmtime(epoch - 5 * 3600))
+
 
 if __name__ == "__main__":
     unittest.main()

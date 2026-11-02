@@ -2,8 +2,8 @@
 Non-secret configuration for Presto Weather Clock.
 
 Everything in this file is safe to commit to version control. Wi-Fi
-credentials, your OpenWeatherMap API key and your UTC offset live in
-secrets.py instead (see secrets.example.py) so they never end up in git
+credentials, your OpenWeatherMap API key and the fallback UTC offset live
+in secrets.py instead (see secrets.example.py) so they never end up in git
 history.
 """
 

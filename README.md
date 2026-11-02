@@ -15,6 +15,8 @@ table.
 - Current weather from OpenWeatherMap: temperature, condition and a
   simple hand-drawn icon (sun, cloud, rain, snow, storm, mist) - no
   image assets or extra fonts required.
+- Automatically uses the configured weather location's timezone offset,
+  including daylight-saving changes.
 - Automatic nightstand dimming on a configurable schedule.
 - Tap the screen at any time to force an immediate weather refresh.
 - Resilient by design: if Wi-Fi, NTP or the weather API misbehave, the
@@ -33,7 +35,7 @@ table.
 | --- | --- |
 | `main.py` | Entry point: connects to Wi-Fi, syncs time, and runs the main draw loop. |
 | `config.py` | Non-secret settings (location, units, dimming schedule, etc). Safe to commit. |
-| `secrets.example.py` | Template for `secrets.py` - Wi-Fi credentials, API key, UTC offset. |
+| `secrets.example.py` | Template for `secrets.py` - Wi-Fi credentials, API key, fallback UTC offset. |
 | `timeutil.py` | Time/date formatting and the day/night window calculation. |
 | `weather.py` | Minimal OpenWeatherMap "current weather" client. |
 | `weather_icons.py` | Draws weather icons from basic shapes (no image files needed). |
@@ -55,7 +57,7 @@ table.
    WIFI_SSID = "your-network-name"
    WIFI_PASSWORD = "your-network-password"
    OPENWEATHER_API_KEY = "your-openweathermap-api-key"
-   UTC_OFFSET = 0  # e.g. -5 for New York, 1 for Paris
+   UTC_OFFSET = 0  # fallback only; e.g. -5 for New York, 1 for Paris
    ```
 
    `secrets.py` is listed in `.gitignore` and is never committed.
@@ -98,13 +100,13 @@ table.
 | --- | --- |
 | `WIFI_SSID` / `WIFI_PASSWORD` | Your wireless network credentials. |
 | `OPENWEATHER_API_KEY` | Your free OpenWeatherMap API key. |
-| `UTC_OFFSET` | Hours offset from UTC. MicroPython has no timezone database, so there's no automatic DST - update this by hand when your clocks change. |
+| `UTC_OFFSET` | Fallback hours offset from UTC, used only if the weather response has no timezone offset. |
 
 ### `config.py` (committed, safe to share)
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| `LOCATION` | `{"city": "London,GB"}` | City name (`"City,CC"`) or `{"lat":.., "lon":..}` coordinates. |
+| `LOCATION` | `{"city": "London,GB"}` | City name (`"City,CC"`) or `{"lat":.., "lon":..}` coordinates. The clock follows this location's timezone, so set it to the place whose local time you want. |
 | `UNITS` | `"metric"` | `"metric"` (°C) or `"imperial"` (°F). |
 | `USE_24_HOUR_CLOCK` | `True` | 24-hour vs 12-hour clock display. |
 | `SHOW_SECONDS` | `False` | Show `HH:MM:SS` instead of `HH:MM`. |
@@ -132,7 +134,9 @@ table.
 - `main.py` connects to Wi-Fi using Presto's built-in `secrets.py`
   convention, syncs the clock over NTP, then loops forever: it polls
   touch, refreshes the weather on a timer (or immediately on tap),
-  adjusts the backlight for day/night, and redraws the screen.
+  uses the weather location's current UTC offset for the displayed local
+  time (including DST), adjusts the backlight for day/night, and redraws
+  the screen. `UTC_OFFSET` is the fallback if the response omits it.
 - Weather fetch failures (bad Wi-Fi, API downtime, quota limits, etc.)
   are caught and remembered as a message rather than raised, so the
   clock keeps ticking and simply shows the last successful reading

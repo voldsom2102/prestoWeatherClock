@@ -59,6 +59,11 @@ class OpenWeatherClient:
 
         wind = data.get("wind", {})
         sys_info = data.get("sys", {})
+        timezone_offset = data.get("timezone")
+        if timezone_offset is not None and type(timezone_offset) is not int:
+            raise WeatherError(
+                "Unexpected OpenWeatherMap response: timezone offset must be an integer"
+            )
 
         return {
             "temp": main.get("temp"),
@@ -73,4 +78,5 @@ class OpenWeatherClient:
             "location_name": data.get("name"),
             "sunrise": sys_info.get("sunrise"),
             "sunset": sys_info.get("sunset"),
+            "timezone_offset_seconds": timezone_offset,
         }

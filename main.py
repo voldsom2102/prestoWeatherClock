@@ -164,7 +164,12 @@ touch = presto.touch
 while True:
     touch.poll()
 
-    now = local_time(time.time(), UTC_OFFSET, time)
+    timezone_offset = (
+        current_weather.get("timezone_offset_seconds")
+        if current_weather is not None
+        else None
+    )
+    now = local_time(time.time(), UTC_OFFSET, time, timezone_offset)
     hour = now[3]
 
     due_for_refresh = (time.time() - last_weather_fetch) >= WEATHER_INTERVAL_S

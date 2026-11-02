@@ -10,7 +10,7 @@ WIFI_PASSWORD = "your-network-password"
 OPENWEATHER_API_KEY = "your-openweathermap-api-key"
 
 # --- Time zone ---
-# Hours offset from UTC, e.g. -5 for New York, 1 for Paris.
-# MicroPython has no timezone database so there's no automatic daylight
-# saving - update this by hand when your local clocks change.
+# Fallback hours offset from UTC, e.g. -5 for New York, 1 for Paris.
+# The clock normally gets the current offset (including DST) from the
+# configured OpenWeatherMap location; this is used if that is unavailable.
 UTC_OFFSET = 0

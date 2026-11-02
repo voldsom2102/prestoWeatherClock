@@ -11,20 +11,21 @@ MONTHS = (
 )
 
 
-def local_time(now_seconds, utc_offset_hours, time_module):
-    """Return a UTC time tuple shifted by a fixed manual UTC offset.
+def local_time(now_seconds, utc_offset_hours, time_module, timezone_offset_seconds=None):
+    """Return a UTC time tuple shifted by the location's UTC offset.
 
     MicroPython has no timezone database - `time.localtime()` on every
     port except Unix is identical to `time.gmtime()` and always reflects
-    UTC. We therefore start from `gmtime()` and apply the user's manual
-    offset ourselves, which also keeps this deterministic when unit
-    tested against CPython (whose `localtime()` would otherwise apply
-    the *host machine's* timezone instead).
+    UTC. We therefore start from `gmtime()` and apply the offset ourselves.
+    Prefer the location's current offset in seconds when available, falling
+    back to the user's manual offset in hours.
 
     `time_module` is passed in (rather than imported) so this can be unit
     tested against CPython's `time` module as well as MicroPython's.
     """
-    return time_module.gmtime(now_seconds + int(utc_offset_hours * 3600))
+    if timezone_offset_seconds is None:
+        timezone_offset_seconds = int(utc_offset_hours * 3600)
+    return time_module.gmtime(now_seconds + timezone_offset_seconds)
 
 
 def format_time(hour, minute, second, use_24_hour, show_seconds):
