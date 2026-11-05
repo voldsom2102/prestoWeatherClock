@@ -73,7 +73,17 @@ class ClockFace:
         icon_r = self.temp_scale * FONT_UNIT // 2
         icon_cx = self.width // 2 - (icon_r * 3)
         icon_cy = y + icon_r
-        weather_icons.draw(d, weather.get("icon"), icon_cx, icon_cy, icon_r, self.fg, self.accent)
+        weather_icons.draw(
+            d,
+            weather.get("icon"),
+            icon_cx,
+            icon_cy,
+            icon_r,
+            self.fg,
+            self.accent,
+            icon_set=getattr(self.config, "ICON_SET", "classic"),
+            bg=self.bg,
+        )
 
         units_symbol = "C" if self.config.UNITS == "metric" else "F"
         temp = weather.get("temp")

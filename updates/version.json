@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "files": {
     "main.py": {
       "url": "https://www.ajmartin.dev/presto-weather-clock/main.py",
@@ -18,13 +18,13 @@
     },
     "weather_icons.py": {
       "url": "https://www.ajmartin.dev/presto-weather-clock/weather_icons.py",
-      "checksum": "d365d6c47b4494190519568dcb5fa299a67bd3c3c4e52f45b307420a52ae5af5",
-      "size": 3026
+      "checksum": "4bf720b87a0d7eb76521bc9f25cf6e9678c7e1442f4928b4c925d4ce078cd458",
+      "size": 7560
     },
     "display_ui.py": {
       "url": "https://www.ajmartin.dev/presto-weather-clock/display_ui.py",
-      "checksum": "d5569c8044c548670625e30e4ef9fd18365a6fd57cae542fe1e13ed634e0665e",
-      "size": 3569
+      "checksum": "1f910929690a24e9bca77d985dfbd041bb5a1a49f6bf8d684c99b294ce3da3a1",
+      "size": 3754
     },
     "ota_update.py": {
       "url": "https://www.ajmartin.dev/presto-weather-clock/ota_update.py",
