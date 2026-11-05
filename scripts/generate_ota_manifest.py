@@ -1,7 +1,7 @@
 """Build the files to host on your OTA update server.
 
 Usage (from the repository root):
-    python scripts/generate_ota_manifest.py 1.0.1 https://example.com/clock/
+    python scripts/generate_ota_manifest.py 1.0.1 https://your-server.example.com/presto-weather-clock/
 
 Copies every updatable file into ./updates/ and writes updates/version.json
 with each file's URL and SHA-256. Upload the contents of updates/ to the URL

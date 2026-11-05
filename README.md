@@ -117,13 +117,16 @@ need to reconnect it to a computer. It is off unless you create
 **Publishing an update**
 
 ```sh
-python scripts/generate_ota_manifest.py 1.0.1 https://example.com/clock/
+python scripts/generate_ota_manifest.py 1.0.1 https://your-server.example.com/presto-weather-clock/
 ```
 
 This copies the updatable files into `updates/` and writes
 `updates/version.json` with each file's URL and SHA-256 (see
 `updates.example/` for the layout). Upload everything in `updates/` to
-that URL. On its next check (at most `OTA_CHECK_INTERVAL_HOURS` later) the
+that URL. In other words, the contents of the local `updates/` folder go
+in the `presto-weather-clock/` folder on your server, so that
+`https://your-server.example.com/presto-weather-clock/version.json` works,
+and `OTA_UPDATE_URL` in `ota_config.py` is that same base URL. On its next check (at most `OTA_CHECK_INTERVAL_HOURS` later) the
 clock downloads the files, verifies every checksum, swaps them in and
 restarts. The new version must be higher than the one in the device's
 `version.json`.
