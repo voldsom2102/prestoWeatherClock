@@ -27,14 +27,14 @@ jobs:
 
       - name: Copy update files
         run: |
-          mkdir -p site/src/public/presto-weather-clock
-          rsync -a --delete updates/ site/src/public/presto-weather-clock/
+          mkdir -p site/public/presto-weather-clock
+          rsync -a --delete updates/ site/public/presto-weather-clock/
 
       - name: Commit and push
         working-directory: site
         run: |
-          VERSION=$(python3 -c "import json; print(json.load(open('src/public/presto-weather-clock/version.json'))['version'])")
-          git add -A src/public/presto-weather-clock
+          VERSION=$(python3 -c "import json; print(json.load(open('public/presto-weather-clock/version.json'))['version'])")
+          git add -A public/presto-weather-clock
           if git diff --cached --quiet; then
             echo "No changes to publish."
             exit 0
