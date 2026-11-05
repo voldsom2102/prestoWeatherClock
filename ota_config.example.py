@@ -6,7 +6,7 @@
 OTA_ENABLED = True
 
 # Base URL that hosts version.json and the .py files produced by
-# generate_ota_manifest.py (see updates.example/ for the layout). Use https.
+# generate_ota_manifest.py (see updates/ for the layout). Use https.
 OTA_UPDATE_URL = "https://your-server.example.com/presto-weather-clock/"
 
 # How often to check for updates, in hours.

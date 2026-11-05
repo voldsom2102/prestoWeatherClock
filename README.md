@@ -131,6 +131,11 @@ clock downloads the files, verifies every checksum, swaps them in and
 restarts. The new version must be higher than the one in the device's
 `version.json`.
 
+If you don't have a web server, the update files will also be hosted at
+<https://www.ajmartin.dev/presto-weather-clock>. Set `OTA_UPDATE_URL` in
+`ota_config.py` to `https://www.ajmartin.dev/presto-weather-clock/` to use
+that hosted copy.
+
 **Safety**
 
 - Files are downloaded and verified before anything is replaced; if any

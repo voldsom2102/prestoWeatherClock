@@ -2,7 +2,5 @@ secrets.py
 ota_config.py
 # Written on the device by the OTA updater; don't commit a local copy.
 /version.json
-# Output of generate_ota_manifest.py (updates.example/ is the committed template).
-updates/
 *.backup
 __pycache__/

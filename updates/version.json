@@ -1,0 +1,35 @@
+{
+  "version": "1.0.1",
+  "files": {
+    "main.py": {
+      "url": "https://www.ajmartin.dev/presto-weather-clock/main.py",
+      "checksum": "470c8873f352145a84a40b87ae99e4efc3eb6c40fbc2e1db154ee695a00cb520",
+      "size": 6596
+    },
+    "timeutil.py": {
+      "url": "https://www.ajmartin.dev/presto-weather-clock/timeutil.py",
+      "checksum": "03d3618c09d9826767190297323051da3eb8ed1bb3f59823745899512a701d4c",
+      "size": 2576
+    },
+    "weather.py": {
+      "url": "https://www.ajmartin.dev/presto-weather-clock/weather.py",
+      "checksum": "3208a02f41c63bc3c021b2e42b72da66982a3f1da6151e22dac336814185537e",
+      "size": 3135
+    },
+    "weather_icons.py": {
+      "url": "https://www.ajmartin.dev/presto-weather-clock/weather_icons.py",
+      "checksum": "d365d6c47b4494190519568dcb5fa299a67bd3c3c4e52f45b307420a52ae5af5",
+      "size": 3026
+    },
+    "display_ui.py": {
+      "url": "https://www.ajmartin.dev/presto-weather-clock/display_ui.py",
+      "checksum": "d5569c8044c548670625e30e4ef9fd18365a6fd57cae542fe1e13ed634e0665e",
+      "size": 3569
+    },
+    "ota_update.py": {
+      "url": "https://www.ajmartin.dev/presto-weather-clock/ota_update.py",
+      "checksum": "ee65c1b8ecd3ff4638940cf763ebf0b00a0fe75f4e50d8008556d8053374a9f2",
+      "size": 7305
+    }
+  }
+}

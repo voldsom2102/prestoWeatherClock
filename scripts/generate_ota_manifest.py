@@ -5,7 +5,7 @@ Usage (from the repository root):
 
 Copies every updatable file into ./updates/ and writes updates/version.json
 with each file's URL and SHA-256. Upload the contents of updates/ to the URL
-you gave. See updates.example/ for the resulting layout.
+you gave. See updates/ for the resulting layout.
 """
 
 import hashlib
