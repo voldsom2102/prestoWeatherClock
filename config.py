@@ -29,6 +29,9 @@ SHOW_SECONDS = False
 WEATHER_UPDATE_INTERVAL_MINUTES = 10
 
 # --- Display ---
+# Weather icon style: "classic" (simple shapes) or "5c" (flat, filled and
+# coloured, like MMM-OpenWeatherForecast's 5c set).
+ICON_SET = "classic"
 # True = crisp 480x480 rendering (slower to redraw).
 # False = quarter resolution, quick and plenty for a nightstand clock.
 FULL_RES = False

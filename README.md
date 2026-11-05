@@ -42,7 +42,7 @@ table.
 | `secrets.example.py` | Template for `secrets.py` - Wi-Fi credentials, API key, fallback UTC offset. |
 | `timeutil.py` | Time/date formatting and the day/night window calculation. |
 | `weather.py` | Minimal OpenWeatherMap "current weather" client. |
-| `weather_icons.py` | Draws weather icons from basic shapes (no image files needed). |
+| `weather_icons.py` | Draws weather icons from basic shapes (no image files needed); `classic` and `5c` styles. |
 | `display_ui.py` | Lays out and draws the clock + weather screen. |
 | `ota_update.py` | Optional over-the-air updater (see [OTA updates](#ota-updates-optional)). |
 | `ota_config.example.py` | Template for `ota_config.py` - update server URL and check interval. |
@@ -173,6 +173,7 @@ to that repo's contents.)
 | `SHOW_SECONDS` | `False` | Show `HH:MM:SS` instead of `HH:MM`. |
 | `WEATHER_UPDATE_INTERVAL_MINUTES` | `10` | How often to poll OpenWeatherMap. |
 | `FULL_RES` | `False` | `True` for crisp 480x480 rendering (slower to redraw). |
+| `ICON_SET` | `"classic"` | Weather icon style: `"classic"` or `"5c"` (flat, filled, coloured; modelled on MMM-OpenWeatherForecast's 5c set, with a crescent moon at night). |
 | `AMBIENT_LIGHT` | `True` | Mirror the screen colours on Presto's onboard RGB LEDs. |
 | `NIGHT_DIMMING_ENABLED` | `True` | Automatically dim the backlight overnight. |
 | `NIGHT_START_HOUR` / `NIGHT_END_HOUR` | `22` / `7` | Local-time (24h) window during which the screen is dimmed. |

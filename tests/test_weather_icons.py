@@ -23,6 +23,12 @@ class FakeDisplay:
     def line(self, x1, y1, x2, y2):
         self.calls.append(("line", x1, y1, x2, y2))
 
+    def triangle(self, x1, y1, x2, y2, x3, y3):
+        self.calls.append(("triangle", x1, y1, x2, y2, x3, y3))
+
+    def create_pen(self, r, g, b):
+        return (r, g, b)
+
 
 class DrawIconTests(unittest.TestCase):
     def setUp(self):
@@ -68,6 +74,43 @@ class DrawIconTests(unittest.TestCase):
         weather_icons.draw(self.display, "01d", 50, 50, 0, fg=1, accent=2)
         circle_calls = [c for c in self.display.calls if c[0] == "circle"]
         self.assertTrue(all(c[3] > 0 for c in circle_calls))
+
+
+class FiveCIconTests(unittest.TestCase):
+    def setUp(self):
+        self.display = FakeDisplay()
+
+    def _draw(self, code, bg=None):
+        weather_icons.draw(self.display, code, 50, 50, 10, fg=1, accent=2, icon_set="5c", bg=bg)
+        return {call[0] for call in self.display.calls}
+
+    def _pens_used(self):
+        return {call[1] for call in self.display.calls if call[0] == "set_pen"}
+
+    def test_every_family_draws_something(self):
+        for code in ("01d", "01n", "02d", "02n", "03d", "04n", "09d", "10d", "11d", "13d", "50d", None):
+            self.display = FakeDisplay()
+            self.assertTrue(self._draw(code), code)
+
+    def test_uses_own_colours_not_fg_or_accent(self):
+        self._draw("10d")
+        self.assertNotIn(1, self._pens_used())
+        self.assertNotIn(2, self._pens_used())
+
+    def test_rain_draws_triangle_drops(self):
+        self.assertIn("triangle", self._draw("10d"))
+
+    def test_night_clear_cuts_crescent_with_background_pen(self):
+        self._draw("01n", bg="BG")
+        self.assertIn("BG", self._pens_used())
+
+    def test_day_clear_does_not_use_background_pen(self):
+        self._draw("01d", bg="BG")
+        self.assertNotIn("BG", self._pens_used())
+
+    def test_unknown_set_falls_back_to_classic(self):
+        weather_icons.draw(self.display, "01d", 50, 50, 10, fg=1, accent=2, icon_set="nope")
+        self.assertIn(("set_pen", 2), self.display.calls)
 
 
 if __name__ == "__main__":

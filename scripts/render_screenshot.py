@@ -61,6 +61,9 @@ class MockDisplay:
     def rectangle(self, x, y, w, h):
         self.draw.rectangle((x, y, x + w, y + h), fill=self._pen)
 
+    def triangle(self, x1, y1, x2, y2, x3, y3):
+        self.draw.polygon((x1, y1, x2, y2, x3, y3), fill=self._pen)
+
     def line(self, x1, y1, x2, y2):
         self.draw.line((x1, y1, x2, y2), fill=self._pen, width=3)
 
