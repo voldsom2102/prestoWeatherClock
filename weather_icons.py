@@ -222,3 +222,4 @@ def draw(display, icon_code, cx, cy, size, fg, accent, icon_set="classic", bg=No
         _draw_5c(display, icon_code, cx, cy, size, bg)
     else:
         _draw_classic(display, icon_code, cx, cy, size, fg, accent)
+
