@@ -1,0 +1,45 @@
+name: Sync OTA files to personal site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - updates/version.json
+  workflow_dispatch:
+
+concurrency:
+  group: sync-ota-to-site
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out this repository
+        uses: actions/checkout@v4
+
+      - name: Check out site repository
+        uses: actions/checkout@v4
+        with:
+          repository: voldsom2102/astro-personal-site
+          token: ${{ secrets.SITE_REPO_TOKEN }}
+          path: site
+
+      - name: Copy update files
+        run: |
+          mkdir -p site/src/public/presto-weather-clock
+          rsync -a --delete updates/ site/src/public/presto-weather-clock/
+
+      - name: Commit and push
+        working-directory: site
+        run: |
+          VERSION=$(python3 -c "import json; print(json.load(open('src/public/presto-weather-clock/version.json'))['version'])")
+          git add -A src/public/presto-weather-clock
+          if git diff --cached --quiet; then
+            echo "No changes to publish."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update presto-weather-clock OTA files to ${VERSION}"
+          git push

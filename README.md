@@ -134,7 +134,11 @@ restarts. The new version must be higher than the one in the device's
 If you don't have a web server, the update files will also be hosted at
 <https://www.ajmartin.dev/presto-weather-clock>. Set `OTA_UPDATE_URL` in
 `ota_config.py` to `https://www.ajmartin.dev/presto-weather-clock/` to use
-that hosted copy.
+that hosted copy. (Maintainers: when `updates/version.json` changes on
+`main`, the `sync-ota-to-site` GitHub Action copies `updates/` to
+`src/public/presto-weather-clock/` in the `astro-personal-site` repo. It
+needs a `SITE_REPO_TOKEN` secret: a personal access token with write access
+to that repo's contents.)
 
 **Safety**
 
