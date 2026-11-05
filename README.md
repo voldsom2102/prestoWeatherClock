@@ -47,7 +47,7 @@ table.
 | `ota_update.py` | Optional over-the-air updater (see [OTA updates](#ota-updates-optional)). |
 | `ota_config.example.py` | Template for `ota_config.py` - update server URL and check interval. |
 | `version.example.json` | Template for the device's `version.json` (installed version). |
-| `updates.example/` | Example of the files you host on your update server. |
+| `updates/` | Example of the files you host on your update server. |
 | `scripts/generate_ota_manifest.py` | Dev-machine tool that builds `updates/` with checksums. |
 | `tests/` | Host-run unit tests (see [Development](#development)) for the pure-Python logic. |
 
@@ -122,7 +122,7 @@ python scripts/generate_ota_manifest.py 1.0.1 https://your-server.example.com/pr
 
 This copies the updatable files into `updates/` and writes
 `updates/version.json` with each file's URL and SHA-256 (see
-`updates.example/` for the layout). Upload everything in `updates/` to
+`updates/` for the layout). Upload everything in `updates/` to
 that URL. In other words, the contents of the local `updates/` folder go
 in the `presto-weather-clock/` folder on your server, so that
 `https://your-server.example.com/presto-weather-clock/version.json` works,
