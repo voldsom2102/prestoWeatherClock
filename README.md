@@ -44,6 +44,11 @@ table.
 | `weather.py` | Minimal OpenWeatherMap "current weather" client. |
 | `weather_icons.py` | Draws weather icons from basic shapes (no image files needed). |
 | `display_ui.py` | Lays out and draws the clock + weather screen. |
+| `ota_update.py` | Optional over-the-air updater (see [OTA updates](#ota-updates-optional)). |
+| `ota_config.example.py` | Template for `ota_config.py` - update server URL and check interval. |
+| `version.example.json` | Template for the device's `version.json` (installed version). |
+| `updates.example/` | Example of the files you host on your update server. |
+| `scripts/generate_ota_manifest.py` | Dev-machine tool that builds `updates/` with checksums. |
 | `tests/` | Host-run unit tests (see [Development](#development)) for the pure-Python logic. |
 
 ## Setup
@@ -95,6 +100,46 @@ table.
 
 5. **Reset the board.** Presto automatically runs `main.py` on boot, so
    it will connect to Wi-Fi, sync the time and start showing the clock.
+
+## OTA updates (optional)
+
+The clock can update itself from a web server you control, so you don't
+need to reconnect it to a computer. It is off unless you create
+`ota_config.py`.
+
+**One-time device setup**
+
+1. `cp ota_config.example.py ota_config.py` and set `OTA_UPDATE_URL`
+   (use `https`) and `OTA_CHECK_INTERVAL_HOURS`.
+2. Upload `ota_config.py`, `ota_update.py` and `version.json` (copy of
+   `version.example.json`) to the board along with the other files.
+
+**Publishing an update**
+
+```sh
+python scripts/generate_ota_manifest.py 1.0.1 https://example.com/clock/
+```
+
+This copies the updatable files into `updates/` and writes
+`updates/version.json` with each file's URL and SHA-256 (see
+`updates.example/` for the layout). Upload everything in `updates/` to
+that URL. On its next check (at most `OTA_CHECK_INTERVAL_HOURS` later) the
+clock downloads the files, verifies every checksum, swaps them in and
+restarts. The new version must be higher than the one in the device's
+`version.json`.
+
+**Safety**
+
+- Files are downloaded and verified before anything is replaced; if any
+  download or checksum fails, nothing changes. If the swap itself fails,
+  the previous files are restored.
+- Only `main.py`, `timeutil.py`, `weather.py`, `weather_icons.py`,
+  `display_ui.py` and `ota_update.py` can be updated. `config.py`,
+  `secrets.py` and `ota_config.py` are never touched.
+- Checksums detect corruption, not tampering: anyone who controls your
+  server (or intercepts plain `http`) can ship code to the clock. Use
+  `https` and a server only you can write to.
+- A failed check or update shows a message and the clock keeps running.
 
 ## Configuration reference
 

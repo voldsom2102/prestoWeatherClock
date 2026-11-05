@@ -16,6 +16,7 @@ from presto import Presto
 
 import config
 from display_ui import ClockFace
+from ota_update import check_and_update
 from timeutil import is_night, local_time
 from weather import OpenWeatherClient, WeatherError
 
@@ -23,6 +24,11 @@ try:
     import secrets
 except ImportError:
     secrets = None
+
+try:
+    import ota_config
+except ImportError:
+    ota_config = None
 
 
 def _check_secrets():
@@ -143,6 +149,10 @@ weather_error = None
 last_weather_fetch = 0
 last_backlight = None
 
+OTA_ENABLED = bool(ota_config and getattr(ota_config, "OTA_ENABLED", False))
+OTA_INTERVAL_S = max(getattr(ota_config, "OTA_CHECK_INTERVAL_HOURS", 24), 1) * 3600
+last_ota_check = 0
+
 
 def refresh_weather():
     """Fetch new weather, but never let a network hiccup take the clock down."""
@@ -180,6 +190,11 @@ while True:
         brightness = config.NIGHT_BRIGHTNESS
     else:
         brightness = config.DAY_BRIGHTNESS
+
+    if OTA_ENABLED and (time.time() - last_ota_check) >= OTA_INTERVAL_S:
+        # Reboots on success; on any failure the clock just carries on.
+        check_and_update(ota_config.OTA_UPDATE_URL, status=show_message)
+        last_ota_check = time.time()
 
     if brightness != last_backlight:
         presto.set_backlight(brightness)
