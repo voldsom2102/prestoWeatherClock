@@ -173,7 +173,7 @@ to that repo's contents.)
 | `SHOW_SECONDS` | `False` | Show `HH:MM:SS` instead of `HH:MM`. |
 | `WEATHER_UPDATE_INTERVAL_MINUTES` | `10` | How often to poll OpenWeatherMap. |
 | `FULL_RES` | `False` | `True` for crisp 480x480 rendering (slower to redraw). |
-| `ICON_SET` | `"classic"` | Weather icon style: `"classic"` or `"5c"` (flat, filled, coloured; modelled on MMM-OpenWeatherForecast's 5c set, with a crescent moon at night). |
+| `ICON_SET` | `"classic"` | Weather icon style: `"classic"` or `"5c"` (flat, filled, coloured; modelled on MMM-OpenWeatherForecast's 5c set, with a crescent moon at night). OTA updates never overwrite `config.py`, so on an already-installed clock add this line to its `config.py` yourself. |
 | `AMBIENT_LIGHT` | `True` | Mirror the screen colours on Presto's onboard RGB LEDs. |
 | `NIGHT_DIMMING_ENABLED` | `True` | Automatically dim the backlight overnight. |
 | `NIGHT_START_HOUR` / `NIGHT_END_HOUR` | `22` / `7` | Local-time (24h) window during which the screen is dimmed. |
